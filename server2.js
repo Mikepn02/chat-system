@@ -22,115 +22,8 @@ const NoNames = require("./names");
 const Config = require("./config");
 const cors = require("cors");
 const AppDataBase = require("./database/database");
-const GetBots = require("./router/bots_list");
-const GetBand = require("./router/ban_list");
-const GetBsb = require("./router/bsb_list");
-const GetOwner = require("./router/owners");
-const GetSite = require("./router/site_list");
-const GetUsers = require("./router/users_list");
-const GetRooms = require("./router/rooms_list");
-const GetLogs = require("./router/logs_list");
-const GetNames = require("./router/names_list");
-const GetSetting = require("./router/settings");
-const GetPowers = require("./router/powers_list");
-const GetSub = require("./router/subscribe_list");
-const GetCuts = require("./router/cut_list");
-const GetHosts = require("./router/host_list");
-const GetHistLetter = require("./router/histletter_list");
-const GetNoText = require("./router/notext_list");
-const GetBars = require("./router/bars_list");
-const GetIntroMsg = require("./router/intromsg_list");
-const GetStats = require("./router/state_list");
-const GetStory = require('./router/story_list');
-const db = new AppDataBase(Config.Datebase);
-const StoryRepo = new GetStory(db);
-const BotsRepo = new GetBots(db);
-const HostRepo = new GetHosts(db);
-const BandRepo = new GetBand(db);
-const SubRepo = new GetSub(db);
-const OwnerRepo = new GetOwner(db);
-const SiteRepo = new GetSite(db);
-const BsbRepo = new GetBsb(db);
-const UsersRepo = new GetUsers(db);
-const SettingRepo = new GetSetting(db);
-const PowersRepo = new GetPowers(db);
-const RoomsRepo = new GetRooms(db);
-const LogsRepo = new GetLogs(db);
-const NamesRepo = new GetNames(db);
-const CutsRepo = new GetCuts(db);
-const NotextRepo = new GetNoText(db);
-const BarsRepo = new GetBars(db);
-const HistLetterRepo = new GetHistLetter(db);
-const IntroRepo = new GetIntroMsg(db);
-const StateRepo = new GetStats(db);
-const myDate = new Date();
 const PORT = process.env.PORT || Config.Port;
-const AccountUserName = "TigerHOst";
-const AccountPassword = "ليثالشامي0988";
-var GroupUsers = [];
-var isVPN = false;
-var istime;
-var islaod;
-var BarFix = false;
-var Offline = false;
-var isbannerdone = false;
-var isbannerdone1 = false;
-var isbannerdone2 = false;
-var isbannerdone3 = false;
-var isrc = true;
-var isrcs = false;
-var UsersList = [];
-var PeerRoom = {};
-var IsTV = "";
-var MaxRep = 3;
-var ListBand = [];
-var ListHost = [];
-var ListIPAll = [];
-var hostname = "";
-var ListIP = [];
-var xss = require("xss");
-var isUserEntred = []
 
-
-
-const search = async function(query, nb){
-let url = "https://www.youtube.com/results?search_query="+query;
-  return fetch(url)
-    .then(res => res.text())
-    .then(body => {
-      let val1 = body.search('itemSectionRenderer');
-      let val2 = body.search('},{\"continuationItemRenderer');
-      body = body.slice(val1, val2);
-      body = "{\""+body+"}";
-      body = JSON.parse(body);
-      if(nb){
-        var max = nb;
-      } else { 
-        var max = 3;
-      }
-      let c = 0;
-      let i = 0;
-      var result = [];
-      while(c<max){
-        if(body.itemSectionRenderer.contents[i].videoRenderer){
-          var res = 
-            {
-              id: body.itemSectionRenderer.contents[i].videoRenderer.videoId,
-             title: body.itemSectionRenderer.contents[i].videoRenderer.title.runs[0].text,
-             time: body.itemSectionRenderer.contents[i].videoRenderer.lengthText.simpleText,
-              link: "https://www.youtube.com/watch?v="+body.itemSectionRenderer.contents[i].videoRenderer.videoId,
-              thumbnail: "https://i.ytimg.com/vi/"+body.itemSectionRenderer.contents[i].videoRenderer.videoId+"/hqdefault.jpg"
-            }
-          result.push(res);
-          i++;
-          c++;
-        } else {
-          i++;
-        }
-      }   
-      return result;
-    });
-};
 
 
 const System = {
@@ -194,6 +87,44 @@ const storage = multer.diskStorage({
         callback(null, Date.now() + "." + extension);
     },
 });
+
+const search = async function(query, nb = 3) {
+    const url = `https://www.youtube.com/results?search_query=${query}`;
+    
+    try {
+        const response = await axios.get(url);
+        const $ = cheerio.load(response.data);
+
+        const videoElements = $('ytd-video-renderer');
+        const result = [];
+
+        for (let i = 0; i < Math.min(nb, videoElements.length); i++) {
+            const videoElement = videoElements.eq(i);
+            
+            const id = videoElement.attr('video-id');
+            const title = videoElement.find('#video-title').text();
+            const time = videoElement.find('ytd-thumbnail-overlay-time-status-renderer').text();
+            const link = `https://www.youtube.com/watch?v=${id}`;
+            const thumbnail = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+            result.push({ id, title, time, link, thumbnail });
+        }
+
+        return result;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+};
+
+// Usage
+search('your query here', 5)
+    .then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 
 const maxSize = Config.MaxUpload;
 
