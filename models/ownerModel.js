@@ -22,10 +22,10 @@ const ownerSchema = mongoose.Schema({
         default: 3
     },
     Tv:{
-        type:text,
+        type:String,
     },
     visitor:{
-        type:text
+        type:String
     },
     room:{
       type: String

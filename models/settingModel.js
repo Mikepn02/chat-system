@@ -7,5 +7,5 @@ const  settingSchema = mongoose.Schema({
     sico: String
 })
 
-const Setting = mongoose.mode('Room',settingSchema)
+const Setting = mongoose.model('Setting',settingSchema)
 module.exports = Setting

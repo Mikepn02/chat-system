@@ -11,5 +11,5 @@ const  subscribeSchema = mongoose.Schema({
     timesis:String,
 })
 
-const Subscribe = mongoose.mode('Subscribe',subscribeSchema)
+const Subscribe = mongoose.model('Subscribe',subscribeSchema)
 module.exports = Subscribe

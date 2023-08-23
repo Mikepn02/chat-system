@@ -20,10 +20,10 @@ const BarSchema = mongoose.Schema({
         type: String,
     },
     mcol:{
-        type:text,
+        type:String,
     },
     msg:{
-        type:text
+        type:String
     },
     pic:{
       type: String

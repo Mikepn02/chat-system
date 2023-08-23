@@ -1,13 +1,13 @@
 const express = require("express");
 const controller = require("../controllers/subscribeController");
-const router = express.Router();
+const subroute = express.Router();
 
-router.post("/create", controller.createText);
-router.delete("/delete/:id", controller.delete);
-router.delete("/deleteAll", controller.deleteAll);
-router.get("/getUser", controller.getAll);
-router.get("/user/:id", controller.getById);
-router.patch("/sub/iduser", controller.getByIdUser);
+subroute.post("/create", controller.createText);
+subroute.delete("/delete/:id", controller.delete);
+subroute.delete("/deleteAll", controller.deleteAll);
+subroute.get("/getUser", controller.getAll);
+subroute.get("/user/:id", controller.getById);
+subroute.patch("/sub/iduser", controller.getByIdUser);
 
 
-module.exports = router;
+module.exports = subroute;

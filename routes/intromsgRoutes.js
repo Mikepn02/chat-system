@@ -1,12 +1,12 @@
 const express = require("express");
 const controller = require("../controllers/intmessageController");
-const router = express.Router();
+const msgroute = express.Router();
 
-router.post("/create", controller.create);
-router.delete("/delete/:id", controller.delete);
-router.get("/getUser", controller.getAll);
-router.get("/user/:id", controller.getById);
-router.get("/category/:id", controller.getByCategory);
+msgroute.post("/create", controller.create);
+msgroute.delete("/delete/:id", controller.delete);
+msgroute.get("/getUser", controller.getAll);
+msgroute.get("/user/:id", controller.getById);
+msgroute.get("/category/:id", controller.getByCategory);
 
 
-module.exports = router;
+module.exports = msgroute;

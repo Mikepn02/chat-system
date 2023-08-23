@@ -39,5 +39,5 @@ botSchema.pre('save', async function(next) {
     }
 })
 
-const Bots = mongoose.model('Bar',botSchema)
+const Bots = mongoose.model('Bots',botSchema)
 module.exports = Bots

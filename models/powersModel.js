@@ -4,5 +4,5 @@ const  powerSchema = mongoose.Schema({
    power: String
 })
 
-const Power = mongoose.mode('Power',powerSchema)
+const Power = mongoose.model('Power',powerSchema)
 module.exports = Power

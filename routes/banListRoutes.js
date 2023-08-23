@@ -1,13 +1,13 @@
 const express = require("express");
 const controller = require('../controllers/banListController')
-const router = express.Router();
+const banroute = express.Router();
 
-router.post("/create", controller.createBand);
-router.delete("/delete/:id", controller.deleteBand);
-router.delete("/deleteAll", controller.deleteAll);
-router.get("/getUser", controller.getAll);
-router.get("/user/:id", controller.getById);
-router.get("user/:ip",controller.getByIps)
-router.patch("/update/:id", controller.update);
+banroute.post("/create", controller.createBand);
+banroute.delete("/delete/:id", controller.deleteBand);
+banroute.delete("/deleteAll", controller.deleteAll);
+banroute.get("/getUser", controller.getAll);
+banroute.get("/user/:id", controller.getById);
+banroute.get("user/:ip",controller.getByIps)
+banroute.patch("/update/:id", controller.update);
 
-module.exports = router;
+module.exports = banroute;

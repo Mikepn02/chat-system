@@ -15,5 +15,5 @@ const  namesSchema = mongoose.Schema({
      }
 })
 
-const Names = mongoose.mode('Names',namesSchema)
+const Names = mongoose.model('Names',namesSchema)
 module.exports = Names

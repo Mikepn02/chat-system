@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const intromsgSchema = mongoose.model({
+const intromsgSchema = mongoose.Schema({
     category: {
         type:String,
         require:true

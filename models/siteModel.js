@@ -13,5 +13,5 @@ const  siteSchema = mongoose.Schema({
     logo: String,
 })
 
-const Site = mongoose.mode('Site',siteSchema)
+const Site = mongoose.model('Site',siteSchema)
 module.exports = Site

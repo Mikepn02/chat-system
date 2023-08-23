@@ -1,11 +1,11 @@
 const express = require("express");
 const controller = require("../controllers/cutController");
-const router = express.Router();
+const cutroute = express.Router();
 
-router.post("/create", controller.createCut);
-router.delete("/delete/:id", controller.deleteById);
-router.get("/getUser", controller.getAll);
-router.get("/user/:id", controller.getById);
+cutroute.post("/create", controller.createCut);
+cutroute.delete("/delete/:id", controller.deleteById);
+cutroute.get("/getUser", controller.getAll);
+cutroute.get("/user/:id", controller.getById);
 
 
-module.exports = router;
+module.exports = cutroute;

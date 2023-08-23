@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const logSchema = mongoose.model({
+const logSchema = mongoose.Schema({
     state: {
         type:String,
         required:true

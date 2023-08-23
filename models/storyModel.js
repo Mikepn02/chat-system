@@ -19,5 +19,5 @@ const  storySchema = mongoose.Schema({
     }
 })
 
-const Story = mongoose.mode('Story',storySchema)
+const Story = mongoose.model('Story',storySchema)
 module.exports = Story

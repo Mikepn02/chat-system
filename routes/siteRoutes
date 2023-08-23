@@ -1,12 +1,12 @@
 const express = require("express");
 const controller = require("../controllers/siteController");
-const router = express.Router();
+const siteroute = express.Router();
 
-router.post("/create", controller.create);
-router.delete("/delete/:id", controller.deleteSite);
-router.get("/getUser", controller.getAll);
-router.get("/user/:id", controller.getById);
-router.patch("/update/:id", controller.updateBannerLogo);
+siteroute.post("/create", controller.create);
+siteroute.delete("/delete/:id", controller.deleteSite);
+siteroute.get("/getUser", controller.getAll);
+siteroute.get("/user/:id", controller.getById);
+siteroute.patch("/update/:id", controller.updateBannerLogo);
 
 
-module.exports = router;
+module.exports = siteroute;

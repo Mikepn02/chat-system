@@ -1,13 +1,13 @@
 const express = require("express");
 const controller = require("../controllers/logController");
-const router = express.Router();
+const logroute = express.Router();
 
-router.post("/create", controller.create);
-router.delete("/delete/:id", controller.delete);
-router.delete("/deleteAll", controller.deleteAll);
-router.get("/getUser", controller.getAll);
-router.get("/user/:id", controller.getById);
-router.get('/ip',controller.getByIp)
+logroute.post("/create", controller.create);
+logroute.delete("/delete/:id", controller.delete);
+logroute.delete("/deleteAll", controller.deleteAll);
+logroute.get("/getUser", controller.getAll);
+logroute.get("/user/:id", controller.getById);
+logroute.get('/ip',controller.getByIp)
 
 
-module.exports = router;
+module.exports = logroute;

@@ -1,10 +1,10 @@
 const express = require("express");
-const controller = require("../controllers/userController");
-const router = express.Router();
+const controller = require("../controllers/settingController");
+const settingroute = express.Router();
 
-router.post("/create", controller.create);
-router.get("/getUser", controller.getAll);
-router.get("/setting/:id", controller.getById);
-router.patch("/update", controller.update);
+settingroute.post("/create", controller.create);
+settingroute.get("/getUser", controller.getAll);
+settingroute.get("/setting/:id", controller.getById);
+settingroute.patch("/update", controller.update);
 
-module.exports = router;
+module.exports = settingroute;
