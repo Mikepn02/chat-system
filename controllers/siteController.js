@@ -4,7 +4,7 @@ const APIFeatures = require('../utils/apiFeatures')
 
 
 
-exports.createText = async(req ,res) => {
+exports.create = async(req ,res) => {
     const site = await Site.create(req.body)
 
     res.status(201).json({

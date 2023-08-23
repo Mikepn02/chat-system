@@ -4,19 +4,19 @@ const APIFeatures = require('../utils/apiFeatures')
 
 
 
-exports.createText = async(req ,res) => {
+exports.create = async(req ,res) => {
     const user = await User.create(req.body)
 
     res.status(201).json({
         status: "success",
         data:{
             user,
-            message: "user creation successfully"
+            message: "user created successfully"
         }
     })
 }
 
-exports.deleteText = async(req,res) => {
+exports.delete= async(req,res) => {
     try{
     const user = await User.findByIdAndDelete(req.params.id);
         if(!user) {
@@ -35,26 +35,33 @@ exports.deleteText = async(req,res) => {
     }
 }
 
-exports.deleteAll = async(req , res) => {
-    try{
+exports.deleteAll = async (req, res) => {
+    try {
+        const deletedUsers = await User.deleteMany();
         
-    const user = await User.deleteMany()
-        if(!user) {
-            return res.status(404).json("No user found")
+        if (deletedUsers.deletedCount === 0) {
+            return res.status(404).json({ message: 'No users found to delete' });
         }
+        
         res.status(204).json({
-            status:"success",
-            data:null
-        })
-
-
-    }catch(error){
+            status: 'success',
+            data: null
+        });
+    } catch (error) {
         res.status(500).json({
-            message:"Failed to delete all data",
+            status: 'error',
+            message: 'Failed to delete all users',
             error: error.message
-        })
+        });
     }
-}
+};
+
+
+
+
+
+
+
 exports.getById = async(req , res) => {
     try{
     const user = await User.findById(req.params.id)
@@ -132,3 +139,48 @@ exports.updatePicx = async (req, res) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 };
+exports.updateUser = async (req, res) => {
+    const data = req.body; 
+
+    try {
+        const { uid, bg, mcol, ucol, evaluation, ico, ip, fp, id, lid, msg, pic, im1, im2, im3, power, rep, topic, username, password, token, loginG, muted, documentationc, lastssen, joinuser } = data;
+
+        await User.findOneAndUpdate({ uid: uid }, {
+            bg: bg,
+            mcol: mcol,
+            ucol: ucol,
+            evaluation: evaluation,
+            ico: ico,
+            ip: ip,
+            fp: fp,
+            id: id,
+            lid: lid,
+            msg: msg,
+            pic: pic,
+            im1: im1,
+            im2: im2,
+            im3: im3,
+            power: power,
+            rep: rep,
+            topic: topic,
+            username: username,
+            password: password,
+            token: token,
+            loginG: loginG,
+            muted: muted,
+            documentationc: documentationc,
+            lastssen: lastssen,
+            joinuser: joinuser
+        });
+
+        res.json({ message: 'User updated successfully.' });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};
+
+
+
+
+
+
