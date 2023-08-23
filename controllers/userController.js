@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const APIFeatures = require('../utils/apiFeatures')
+const catchAsync = require('../utils/catchASync')
 
 
 
@@ -83,22 +84,24 @@ exports.getById = async(req , res) => {
     }
 }
 
-exports.getAll = async(req,res) => {
-    const features = new APIFeatures(User.find(),req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate()
+exports.getAll = catchAsync(async (req, res, next) => {
 
-    const user = await features.query
+
+    const features = new APIFeatures(User.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate()
+    const users = await features.query
     res.status(200).json({
-        status:"success",
-        result: user.length,
-        data:{
-            user
+        status: "success",
+        results: users.length,
+        data: {
+            users
         }
     })
-}
+
+})
 exports.updateId = async (req, res) => {
     const data = req.body; 
 

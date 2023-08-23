@@ -5,9 +5,7 @@ const multer = require("multer");
 const fs = require("fs");
 const rimraf = require("rimraf");
 const Jimp = require('jimp');
-const passwordHash = require("password-hash");
 const formidable = require("formidable");
-const mysqlDump = require('mysqldump');
 const cp = require("child_process");
 const fetch = require('node-fetch');
 const app = express();
@@ -10646,6 +10644,3 @@ user: socket.id,
     });
 });
 
-http.listen(PORT, function () {
-    console.log("Server started on port " + PORT);
-});
