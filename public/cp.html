@@ -1,0 +1,668 @@
+﻿
+<!DOCTYPE html>
+<html lang="ar" hreflang="ar-sa">
+    
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <link rel="icon" type="image/x-icon" href="/favicon.ico">
+      <meta name="google" value="notranslate">
+      <meta name="HandheldFriendly" content="True">
+      <meta name="viewport" content="width=480 ,   user-scalable=0, minimum-scale=1.0,maximum-scale=1.0">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <title>إداره</title>
+      <script src="/js/jquery-1.11.1.min.js"></script>
+      <script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="/css/style.css">
+      <link rel="stylesheet" href="/css/font-awesome.min.css">
+      <script src="/js/bootstrap.min.js" item="" str=""></script>
+      <script src="/js/client.min.js"></script>
+      <script type="text/javascript" src="/jscolor/jscolor.js"></script>
+      <link rel="stylesheet" href="/css/admin.css">
+    </head>
+	  <script>
+	  $(function(){
+	  <!-- moment.locale('ar'); -->
+	  });
+	  </script>
+
+<style>
+.label-primary{
+color:#fff;
+background-color:#286090
+}
+
+
+	#m2 {
+		margin-left: 0px;
+		position: absolute;
+		display: inline;
+	}
+	#m1 {
+		width: 150px;
+		height: 100%;
+	}
+	#body {
+		background-color: #fefefe;
+	}
+
+	div#invoices tr th, div#invoices tr td,div#hostinta tr th, div#hostinta tr td {
+		text-align: center;
+	}
+	div#hostinta tr th, div#hostinta tr td {
+		min-width: 120px;
+	}
+	.table>tbody>tr>td, .table>thead>tr>th {
+		padding: 2px 5px;
+	}
+    
+.fa-save:before, .fa-refresh:before, .fa-times:before {
+    padding-right: 5px;
+    float: left;
+}
+.btn:focus, .btn:hover {
+    box-shadow: none!important;
+    background-position: 0 !important;
+}
+.backupImport th, .backupImport td {
+    min-width: 100px;
+    text-align: center;
+}
+.backupImport {
+    display: block;
+}
+
+.activepower{
+   border:2px solid #000;
+  background:bisque;
+}
+
+#fps .tablesorter tbody tr { display: none; }
+
+#fps .tablesorter tbody tr:nth-child(-n+50) { display: table-row; }
+
+#actions .tablesorter tbody tr { display: none; }
+
+#actions .tablesorter tbody tr:nth-child(-n+50) { display: table-row; }
+
+#logins .tablesorter tbody tr { display: none; }
+
+#logins .tablesorter tbody tr:nth-child(-n+50) { display: table-row; }
+
+</style>
+
+<body id="body" onload="start();">
+	<button onclick="window.close();" style="position:fixed;right:5px;z-index:555;font-size: 11px !important;" class='btn btn-success fr'>عودة للدردشة </button>
+
+	<div class="fl  border corner" id="m1">
+		<ul class="nav nav-pills nav-stacked" style="
+		border-right: 2px solid darkgray;
+		border-bottom: 2px solid darkgray;
+	">
+	
+				<li class="" style="margin: 0px 0px 0 -4px;width: auto;"><a data-toggle="tab" onclick="fps();" href="#fps"  class="fa fa-bars ico_pl">السجل</a></li>
+
+				<li class=""><a data-toggle="tab" onclick="actions();" href="#actions" class="fa fa-history ico_pl">الحالات</a></li>
+				
+				<li class=""><a data-toggle="tab" onclick="logins();" href="#logins" class="fa fa-users ico_pl">الأعضاء</a></li>
+				
+				<li id="botp" style="display:none"><a data-toggle="tab" onclick="bots();" href="#bots" class="fa fa-user ico_pl">الوهمي </a></li>
+				
+				<li class=""><a data-toggle="tab" onclick="bans();" href="#bans" class="fa fa-ban ico_pl">الحظر</a></li>
+				
+				<li id="sitepow" style="display:none"><a data-toggle="tab" onclick="powers();" href="#powers" class="fa fa-delicious ico_pl">الصلاحيات</a></li>
+				
+				<li><a data-toggle="tab" onclick="fltr();" href="#fltr" class="fa fa-filter ico_pl">فلتر</a></li>
+				
+				<li><a data-toggle="tab" onclick="rooms();" href="#rooms" class="fa fa-home ico_pl">الغرف</a></li>
+				
+				<li><a data-toggle="tab" onclick="shrt();" href="#shrt" class="fa fa-gg ico_pl">الإختصارات</a></li>
+				
+				<li><a data-toggle="tab" onclick="subs();" href="#subs" class="fa fa-archive ico_pl">الإشتراكات</a></li>
+				
+				<li><a data-toggle="tab" onclick="msgs();" href="#msgs" class="fa fa-comment ico_pl">الرسائل</a></li>
+
+				<li><a data-toggle="tab" onclick="sett(1);" href="#bnrat" class="fa fa-smile-o ico_pl">الرموز</a></li>
+
+				
+				<li id="siteweb" style="display:none"><a data-toggle="tab" onclick="sett(1);" href="#sett" class="fa fa-sitemap ico_pl">الموقع</a></li>
+			
+				<li id="host" style="display: none;"><a style="margin: 0!important; padding: 10px 0px 0px 9px !important;" data-toggle="tab" onclick="hostin();" href="#hostin" class="fa fa-pencil-square-o ico_pl">الاضافات</a></li>
+			
+				<!--
+	<li>
+	<a data-toggle="tab" onclick="whme();" href="#whme">الوهمي</a>
+	</li>
+	-->
+	
+			</ul>
+	</div>
+	<div class="fl tab-content" id="m2">
+		<div id="fps" class="tab-pane fade  cpevents  " >
+			<input class="banit2" placeholder="رقم الجهاز \ الدوله \ الاي بي">
+			<button onclick="banit2($('.banit2').val());" class="btn btn-success" style=" border-radius: 0px; color: #fff; border: 0px; height: 34px; font: icon; font-size: 15px!important; width: 80px;background: #da1e1e!important; height: 30px!important; font: icon; font-size: 15px!important">تشفير سريع</button>		</br>
+			<input placeholder="البحث" id="fpsearch" value="" onchange="fps();">
+				<div style="text-align:left;padding:5px">
+		<input type="hidden" class="hdnActivePage" value="1" />
+        <button style="display: none; color: #fff; background-color: #31b0d5; border-color: #269abc; border: 0px; height: 34px; font: icon; font-size: 15px!important;" class="prevpage">عرض اقل</button>
+        <button class="nextpage" style="color: #fff; background-color: #31b0d5; border-color: #269abc; border: 0px; height: 34px; font: icon; font-size: 15px!important;">عرض المزيد</button>
+		</div>
+		</div>
+		<div id="actions" class="tab-pane fade cpactions">
+				<div style="text-align:left;padding:5px">
+		<input type="hidden" class="hdnActivePages" value="1" />
+        <button style="display: none; color: #fff; background-color: #31b0d5; border-color: #269abc; border: 0px; height: 34px; font: icon; font-size: 15px!important;" class="prevpages">عرض اقل</button>
+        <button class="nextpages" style="color: #fff; background-color: #31b0d5; border-color: #269abc; border: 0px; height: 34px; font: icon; font-size: 15px!important;">عرض المزيد</button>
+		</div>
+		</div>
+		<div id="bots" class="tab-pane fade cpactions">
+		<div style="padding:5px">
+			<label class="label label-info fa fa-home">الوهمي الناطق</label><br>
+			<input id="nameb" type="text" placeholder="إسم البوت" style="width:250px" >
+			<label style="margin-left:5px;" class="label label-primary">الاسم</label><br><br>
+			<hr style="margin:5px">
+			<input id="msgbot" type="text" placeholder="الحاله" style="width:250px" >
+			<label style="margin-left:5px;" class="label label-primary">الحاله</label><br><br>
+			<hr style="margin:5px">
+			<div style="display:inline">
+			<img style="width:100px;height:100px" class="spicbot" onclick="sendpic()" src="/pic.png">
+			<label style="margin-left:5px;" class="label label-primary">الصورة</label><br><br>
+			</div>
+			<hr style="margin:5px">
+			<select id="rommbot" style="width:250px">
+			</select>
+			<label style="margin-left:5px;" class="label label-primary">الغرفة</label><br><br>
+			<hr style="margin:5px">
+			<select id="statsbots" style="width:250px">
+			<option value="0">أخضر</option>
+			<option value="1">أصفر</option>
+			<option value="2">أحمر</option>
+			<option value="3">فضي</option>
+			</select>
+			<label style="margin-left:5px;" class="label label-primary">الحالة</label><br><br>
+			<hr style="margin:5px">
+			<select id="countrybot" style="width:250px">
+			</select>
+			<label style="margin-left:5px;" class="label label-primary">الدولة</label><br><br>
+			<hr style="margin:5px">
+			<select id="rankbot" style="width:250px">
+			
+			</select>
+			<label style="margin-left:5px;" class="label label-primary">الرتبة</label><br><br>
+			<hr style="margin:5px">
+			<button class="btn btn-success" onclick="addbot()">حفظ</button>
+			</div>
+</div>
+		<div id="logins" class="tab-pane fade cpactions">
+
+            <div class="remDefUser" style="color: red; max-width: 250px; border: 1px solid; text-align: center; margin-bottom: 4px; font: icon; padding: 11px 0px 0px 0px; font-size: 14px!important; background: #fafaff; ">
+                
+                حدد مدة الحذف الآلي للعضويات التي لم يتم رصد تسجيل دخولها الى الموقع خلال الايأم الماضية
+                <br>
+                <ul class="nav navbar-nav" style="float: none;"> 
+                    <li class="dropdown" style="float: none;">
+                        <a href="#" class="dropdown-toggle" id="drop2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding: 5px;font: icon; font-size: 15px!important;">
+                            الحذف الآلي للعضويات 
+                            <span class="caret"></span>
+                            
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="drop2" style="float: none;width: 100%;text-align: center;">
+                            <li>
+                                <a style="color: red;" onclick="remDefUser(90)" href="#">خلال 90 يوم</a>
+                            </li>
+                            <li>
+                                <a style="color: red;" onclick="remDefUser(60)" href="#">خلال 60 يوم</a>
+                            </li>
+                            <li>
+                                <a style="color: red;" onclick="remDefUser(30)" href="#">خلال 30 يوم</a>
+                            </li>
+                            <li>
+                                <a style="color: red;" onclick="remDefUser(20)" href="#">خلال 20 يوم</a>
+                            </li>
+                            <li>
+                                <a style="color: red;" onclick="remDefUser(10)" href="#">خلال 10 ايام</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+			
+			<input placeholder="البحث اسم العضو\الآي بي\الجهاز" id="loginsearch" value="" onchange="logins();">
+			
+				<div style="text-align:left;padding:5px">
+		<input type="hidden" class="hdnActivePagesu" value="1" />
+        <button style="display: none;color: #fff; background-color: #31b0d5; border-color: #269abc; border: 0px; height: 34px; font: icon; font-size: 15px!important;"" class="prevpagesu">عرض اقل</button>
+        <button class="nextpagesu" style="color: #fff; background-color: #31b0d5; border-color: #269abc; border: 0px; height: 34px; font: icon; font-size: 15px!important;"" >عرض المزيد</button>
+		</div>
+		</div>
+		
+		
+		<div id="powers" class="tab-pane fade" style="width:500px;">
+			<select onchange="powerchange();" style="width:200px;display:inline" class="powerbox selbox form-control"></select>
+			<button class="delp btn btn-danger fa fa-times">حذف</button>
+			<div class="sico border corner fr" style="width:200px;"></div>
+		</div>	
+		<div id="bans" class="tab-pane fade  bans">
+		<style>
+				.fa-chrome:before,.fa-edge:before,.fa-firefox:before,.fa-internet-explorer:before,.fa-opera:before,.fa-safari:before,.fa-android:before,.fa-scribd:before {
+					margin-left: 16px;
+				}
+
+			</style> 
+			<div id="browser" style="width: 100%;margin: 20px 2px;" >
+			 <span id="isvpn" ></span>
+				<label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label " onclick="sendfile3('vpns')">VPN حظر </label><br><br>
+ 
+				<label class="label label-primary">المتصفحات المسموح بها</label>
+				<div style="width: 400px; border: 1px solid; margin: 9px 0 0 -4px; padding: 2px; border-radius: 0 7px 7px 0; border-radius: 0px; border: 1px solid #6495ed; margin: 11px 0px 0px 3px;">
+					<hr style="margin: 10px 5px 5px;">
+					<label class="checkbox-inline" style="margin: 0 0 0 10px;">
+						<input type="checkbox" id="browser9" value="option3"> السماح بدخول جميع المتصفحات
+					</label>
+					<hr style="margin: 10px 5px 5px;">
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" class="fa fa-chrome" type="checkbox" id="browser1" value="option1">Chrome
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser2" value="option2" class="fa fa-firefox"> Firefox
+					</label>
+					<br>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser3" value="option3" class="fa fa-safari"> Safari
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser4" value="option3" class="fa fa-opera"> Opera	
+					</label>
+					<br>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser5" value="option3" class="fa fa-internet-explorer"> Internet Explorer	
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser6" value="option3" class="fa fa-edge"> Edge	
+					</label>
+					<br>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser7" value="option3" class="fa fa-android"> Android webview		
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="browser8" value="option3" class="fa fa-scribd"> Samsung Internet	
+					</label>
+					<button id="btnbrowser" class="btn btn-success">حفظ</button>
+				</div>
+			</div>
+	<style>
+				.fa-windows:before,.fa-linux:before,.fa-apple:before,.fa-times-circle:before,.fa-th-large:before {
+					margin-left: 16px;
+				}
+
+			</style> 
+
+
+			<div id="system" style="width: 100%;margin: 20px 2px;" >
+				<label class="label label-primary">انظمة التشغيل المسموح بها</label>
+				<div style="width: 400px; border: 1px solid; margin: 9px 0 0 -4px; padding: 2px; border-radius: 0 7px 7px 0; border-radius: 0px; border: 1px solid #6495ed; margin: 11px 0px 0px 3px;">
+					<hr style="margin: 10px 5px 5px;">
+					<label class="checkbox-inline" style="margin: 0 0 0 10px;">
+						<input type="checkbox" id="system7" value="option3"> السماح بدخول جميع انظمة التشغيل
+					</label>
+					<hr style="margin: 10px 5px 5px;">
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" class="fa fa-windows" type="checkbox" id="system1" value="option1">Windows
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="system2" value="option2" class="fa fa-linux"> Linux
+					</label>
+					<br>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="system3" value="option3" class="fa fa-android"> Android
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="system4" value="option3" class="fa fa-apple"> iOS	
+					</label>
+					<br>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="system6" value="option3" class="fa fa-th-large"> Windows Phone	
+					</label>
+					<label style="width: 170px;margin: 0 0 0 15px;" class="checkbox-inline">
+						<input style="margin-left: -35px;" type="checkbox" id="system5" value="option3" class="fa fa-times-circle "> Mac OS	
+					</label>
+					<button id="btnSystem" class="btn btn-success">حفظ</button>
+				</div>
+			</div>
+
+			<input class="banit" placeholder="رقم الجهاز \ الدوله \ الاي بي"><button onclick="banit($('.banit').val());" class="btn btn-success" style="background: #da1e1e!important; height: 32px!important; font: icon; font-size: 15px!important; margin: -3px 0 0 2px!important;">حظر</button>
+		</div>
+		
+		<div id="fltr" class="tab-pane fade  fltr">
+			<input class="fltrit" placeholder="اضافه كلمه\موقع">
+			<br><button style="margin:5px;width:200px;" onclick="fltrit('amsgs',$('.fltrit').val());" class="fa fa-check btn btn-success">إضافه ألى الكلمات المسموحه</button>
+			<br><button style="margin:5px;width:200px;" onclick="fltrit('bmsgs',$('.fltrit').val());" class="fa fa-times btn btn-danger">إضافه ألى الكلمات الممنوعه</button>
+			<br><button style="margin:5px;width:200px;" onclick="fltrit('wmsgs',$('.fltrit').val());" class="fa fa-warning btn btn-info">إضافه ألى الكلمات المراقبه</button>
+			<br><b>آخر الكلمات الممنوعه</b>
+			<div id="fltred" class="break" style="width:400px;height:280px;"></div>
+		</div>
+		
+		<div id="rooms" class="tab-pane fade"></div>
+		
+		<div id="shrt" class="tab-pane fade">
+			<input style="margin: 4px;" class="shrtname" placeholder="الإختصار \ س1">
+			<br><input style="margin: 4px;" class="shrtvalue" placeholder="الزخرفه \ السلام عليكم">
+			<br><button style="margin:5px;width:200px;" onclick="shrtadd();" class="fa fa-check btn btn-success">إضافه</button>
+			<br>
+		</div>
+		
+		<div id="subs" class="tab-pane fade"></div>
+		
+		<div id="msgs" class="tab-pane fade  msgs">
+			<input class="msgt" placeholder="عنوان الرساله">
+			<br> 
+			<textarea class="msgm" placeholder="الرساله" maxlength="250"></textarea>
+			<br><button style="margin:5px;width:200px;" onclick="msgsit('w',$('.msgt').val(),$('.msgm').val());" class="fa fa-check btn btn-success">إضافه ألى رسائل الترحيب</button>
+			<br><button style="margin:5px;width:200px;" onclick="msgsit('d',$('.msgt').val(),$('.msgm').val());" class="fa fa-check btn btn-danger">إضافه ألى الرسائل اليوميه</button>
+			<br><b>الرسائل</b><br>
+		</div>
+
+
+		<div id="bnrat" class="tab-pane fade  bnrat">
+			<label style=" width: 106px; text-align: center; height: 31px; margin: 7px 0!important; " class="label label-primary fa fa-image">ايقونات السوابر</label><span class="btn btn-primary minix fa fa-plus border" style=" height: 31px; width: 50px; margin: 3px 0px 0px 2px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; " onclick="sendfilea(this,s_sico,'sico');"></span>
+				<div style="width:300px;" class="p-sico break">
+				</div>
+				<br>
+				<label style=" width: 106px; text-align: center; height: 31px; margin: 7px 0!important; " class="label label-primary fa fa-image">ايقونات الهدايا</label><span class="btn btn-primary minix fa fa-plus border" style=" height: 31px; width: 50px; margin: 3px 0px 0px 2px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "  onclick="sendfilea(this,s_dro3,'dro3');"></span>
+				<div style="width:300px;" class="p-dro3 break">
+				</div>
+				<br>
+				<label style=" width: 106px; text-align: center; height: 31px; margin: 7px 0!important; " class="label label-primary fa fa-image">الإبتسامات</label><span class="btn btn-primary minix fa fa-plus border" style=" height: 31px; width: 50px; margin: 3px 0px 0px 2px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; " onclick="sendfilea(this,s_emo,'emo');"></span>
+				<div style="width:300px;" class="p-emo break">
+				</div>
+		</div>
+		
+		
+		<div style="" id="hostin" class="tab-pane fade">
+			
+            <div class="corner" style="padding:4px;">
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('fps')">حذف سجل الدخول</label>
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('actions')">حذف سجل الحالات</label>
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('filter')">حذف الفلتر</label>
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('names')">مسح سجل كشف الاسماء </label>
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('filesClear')">حذف ملفات الخاص</label>
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('bars')">حذف الحائط</label>
+				<label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #d9534f; padding: 6px 12px;" class="btn btn-danger label fa fa-trash  " onclick="sendfile3('storyy')">حذف الستوري</label></br></br>
+          <!--     <label style="background: #5cb85c; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5cb85c; padding: 6px 12px;border: 1px solid #FFC107!important; background: #FFC107!important;" class="btn btn-danger label fa fa-trash " onclick="sendfile3('adoyat')">حذف جميع العضويات</label><br><br>-->
+                <label style="background: #5cb85c; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5cb85c; padding: 6px 12px;border: 1px solid #607d8b!important; background: #607d8b!important;" class="btn btn-danger label fa fa-trash " onclick="sendfile3('bandd')">فك جميع المحظورين</label><br><br>
+                <label style="background: #5cb85c; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5cb85c; padding: 6px 12px;border: 1px solid #607d8b!important; background: #607d8b!important;" class="btn btn-danger label fa fa-trash " onclick="sendfile3('ahtsar')">حذف جميع الاختصارات</label><br><br>
+                <label style="background: #5cb85c; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5cb85c; padding: 6px 12px;border: 1px solid #607d8b!important; background: #607d8b!important;" class="btn btn-danger label fa fa-trash " onclick="sendfile3('mesgss')">حذف جميع الرسائل والترحيب</label><br><br>
+                <label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px;" class="btn btn-info label fa fa-refresh " onclick="socketIo()">اعادة تشغيل الدردشة</label><br><br>
+                <span id="isbar" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on" onclick="sendfile3('ficbar')"> تثبيت الحائط </label><br><br>
+                <span id="isuser" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on " onclick="sendfile3('fixuser')"> تثبيت العضويات </label><br><br>
+                <span id="isrc" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on " onclick="sendfile3('rc')"> إعادة الاتصال </label><br><br>
+                <span id="isbnr" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on" onclick="sendfile3('mbnr')"> اضافة بنر </label><br><br>  
+				<span id="isbnr1" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on" onclick="sendfile3('mbnr1')">  تنظيف العام </label><br><br>
+				<span id="isbnr2" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on" onclick="sendfile3('mbnr2')">  من شاهد البروفايل </label><br><br> 
+				<span id="isbnr3" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on" onclick="sendfile3('mbnr3')"> ارسال الوسائط في العام</label><br><br> 
+                
+				<span id="isbnr4" ></span>
+				<label style="float: left; margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;" class="btn btn-info label fa fa-toggle-on" onclick="sendfile3('mbnr4')"> رد عام</label><br><br> 
+                
+				<label style="background: #5cb85c; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5cb85c; padding: 6px 12px;" class="btn btn-success label fa fa-save " onclick="sendfile3('backup')">إنشاء نسخة احتياطي </label>
+                <label style="background: #e99e35; font-weight: 100 !important; font-size: 14px !important; min-width: 160px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #e99e35; padding: 6px 12px;" class="btn btn-warning label fa fa-refresh " onclick="sendfile3('import')">إستعادة اخر نسخة إحتياطية</label><br>
+				<br>
+				
+                 <span id="isuser" >عدد مرات التكرار</span>
+				<input id="Numberep" type="number" min="3" max="100" maxlength="3" placeholder="عدد مرات التكرار" style="width:auto" >
+               	<label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 92px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px;float: left;" class="btn btn-info label fa fa-check " onclick="sendfile5()">تعديل</label>
+			  <br><br>
+				<label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 92px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px; float: left;" class="btn btn-info label fa fa-check " onclick="sendfile4()">إظافة روابط</label>
+				<input id="tvurl" type="text" placeholder="رابط الاذاعة الراديو ..." style="width:40%" >
+              <span id="isuser" style=" font: icon; font-size: 17px!important; background: #f0ad4e; color: #fff; width: 111px!important; position: absolute; margin: 0px 0 0 0; height: 30px; text-align: center; padding: 4px; " > : اذاعة الراديو </span>
+			  <br><br>
+	
+			 <div id="isdmon" style="display:none">
+			     <span >تاريخ إنتهاء الاشتراك</span>
+				<input id="dtfi" type="date" placeholder="تاريخ الاشتراك" style="width:20%" >
+				<label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 92px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px; float: left; " class="btn btn-info label fa fa-check " onclick="sendfile6('tfinish')">تعيين</label>
+			 <br><br>
+				<label style="margin: 2px; font-weight: 100 !important; font-size: 14px !important; min-width: 92px; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid #5bc0de; padding: 6px 12px; border-radius: 0px; float: left; " class="btn btn-info label fa fa-check " onclick="sendfile6('add')">إضافة دومين</label>
+				<input id="domineurl" type="text" placeholder="رابط الدومين" style="width:20%" >
+				<br><br>
+              <span id="isuser" >الدومينات</span>
+				 <select id="hostname" style="width:260px;height: 38px; border-color: #bcbbbb;">
+			  </select>
+				<label style="margin: 2px;font-weight: 100 !important;font-size: 14px !important;min-width: 92px;text-align: center;white-space: nowrap;vertical-align: middle;touch-action: manipulation;cursor: pointer;border: 1px solid #d9534f;padding: 6px 12px;border-radius: 0px;float: left;font: icon;background: #d62b2b;" class="btn btn-danger label" onclick="sendfile6('remove')">مسح دومين</label>
+			  </div>
+			  <br>
+			   <div id="gust" style=" background: #d9534f; color: #fff; width: 200px; text-align: center; font: icon; font-size: 14px!important; height: 30px; padding: 6px 0; display: none; ">عدد الزوار : 0</div> 
+			  <div id="users" style="height: 40px!important; background: #d9534f; color: #fff; width: 200px; text-align: center; font: icon; font-size: 15px!important; padding: 12px 0px; margin: 30px 0 0 0;">عدد المستخدمين : 0</div>
+			   <div id="vistor" style="padding: 46px 0px 7px 0px; background: #5cb85c; color: #fff; width: 200px; text-align: center; font: icon; font-size: 14px!important; display: none;">عدد مشاهدين الموقع : 0</div> 
+	   
+			  <br>
+			  <label style="margin-left:5px;" class="label label-primary">قواعد البيانات</label>
+			  <br><br>
+			<table>
+  <tr>
+    <th>ID</th>
+    <th>database</th>
+    <th>state</th>
+  </tr>
+  <tbody class="databaseis">
+  
+  </tbody>
+</table>
+
+<br>
+<!-- <div id="gust">عدد الزوار : 0</div> -->
+<!--<div id="users" style="height: 40px!important; position: absolute; background: #5bc0de; color: #fff; width: 200px; text-align: center; font: icon; font-size: 15px!important; padding: 12px 0px; ">عدد المستخدمين : 0</div>-->
+<!-- <div id="vistor">عدد مشاهدين الموقع : 0</div> -->
+</div>
+
+</div>
+		
+		<div id="sett" class="tab-pane fade">
+			<div class="border corner" style="padding:4px;">
+				<div style="width: 330px;color: red;text-align: center;border: 1px solid  #333;border-radius: 15px;padding: 4px;"> ملاحظة ادارة الموقع محميه لا يستطيع احد التعديل عليها  عدا صاحب الموقع </div>
+				<label class="label label-info fa fa-home">إعدادات الموقع</label>
+				<br>
+						<!-- <label class="label label-danger fa fa-clock">تاريخ الاشتراك</label> -->
+				<div class="chatfinish" style="text-align: center; background: #d9534fde; color: #fff; margin-bottom: 5px; border-radius: 0px; font-size: 14px!important; height: 40px; padding: 11px; font: message-box;">
+				
+				</div>
+				<label class="label label-primary fa fa-link">الدومينات</label>
+				<br>
+				<select id="hostnames" style="width:260px">
+				</select>
+				<br><br>
+				<label style="margin-left:5px;" class="label label-primary">إسم الموقع</label>
+				<br>
+				<textarea style="width:260px;" id="sett_name" type="text" placeholder="شات فلان الكتابي"></textarea>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">عنوان الصفحه</label>
+				<br>
+				<textarea style="width:260px;" id="sett_title" type="text" placeholder="شات فلان الكتابي للجوال - شات خليجي عربي"></textarea>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">وصف الموقع</label>
+				<br>
+				<textarea style="width:260px;" id="sett_description" type="text" placeholder="شات فلان الكتابي للجوال , دردشه , مسابقات , العاب , تعارف , بدون تسجيل او تحميل"></textarea>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">الكلمات الدلاليه</label>
+				<br>
+				<textarea style="width:260px;" id="sett_keywords" type="text" placeholder="شات فلان, شات فلان الكتابي, شات خليجي, شات بدون تسجيل, شات بدون تحميل"></textarea>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">السكربت JavaScript</label>
+				<br>
+				<textarea style="width:260px;" id="sett_scr" type="text" placeholder="للمبرمجين فقط"></textarea>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">لون القوالب</label>
+				<br>
+				<input class="jscolor color {pickerPosition:'top'} sbg  corner dots" style="width: 80px; color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);" autocomplete="off">
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">لون المحتوى</label>
+				<br>
+				<input class="color {pickerPosition:'top'} sbackground  corner dots" style="width: 80px; color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);" autocomplete="off">
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">لون الأزرار</label>
+				<br>
+				<input class="color {pickerPosition:'top'} sbuttons  corner dots" style="width: 80px; color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);" autocomplete="off">
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">الرسائل</label>
+				<br> <input type="number" min="5" value="5" class="msgstt corner dots" style="width: 80px;" autocomplete="off"><b>المده بالدقائق للرسائل اليوميه</b>
+				<br><div class="likeMsgRoom" style="display: block"><input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات لإرسال رسائل في الغرف</b></div>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">الحائط</label>
+				<br><input type="number" min="0" value="0" class="wall_likes corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات</b>
+				<div class="likeUpImgBc" style="display: none"><br> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات لرفع صور\فيديو على الحائط</b></div>
+				<br> <input type="number" min="0" value="0" class="wall_minutes corner dots" style="width: 80px;" autocomplete="off"><b>المده بين رسائل الحائط بالدقيقه</b>
+				<br>
+				<label style="margin-left:5px;" class="label label-primary">الزوار</label>
+				<br>
+				<input id="allowg" type="checkbox" class="allowg corner dots" autocomplete="off">
+				<label for="allowg" class="checkbox-inline"> السماح بدخول الزائر</label>
+				<br>
+				<input id="allowreg" type="checkbox" class="allowreg corner dots" autocomplete="off">
+				<label for="allowreg" class="checkbox-inline"> السماح بتسجل عضوية</label>
+				<br>
+				<br>
+				<div class="likeTopicEdit" style="display: none"><br><input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات لتعديل الاسم والحالة</b></div>
+				<div class="likeUpPic" style="display: none"> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات لتغير الصورة الشخصيه</b></div>
+				<input type="number" min="0" value="0" class="miclikes corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات للمايك</b><br>
+				<input type="number" min="0" value="0" class="pmlikes corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات للمحادثات الخاصه</b>
+				<br><input type="number" min="0" value="0" class="notlikes corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات للتنبيهات</b>
+				<br><input type="number" min="0" value="0" class="fileslikes corner dots" style="width: 80px;" autocomplete="off"><b>عدد الايكات لإرسال صور\فيديو خاص</b>
+				<br>
+				<div class="lengthMsgRoom" style="display: none"> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد احرف الرساله المسموح بها في العام</b></div>
+				<div class="lengthMsgPm" style="display: none"> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد احرف الرساله المسموح بها في الخاص</b></div>
+				<div class="lengthMsgBc" style="display: none"> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد احرف الرساله المسموح بها في الحائط</b></div>
+				<div class="lengthUserReg" style="display: none"> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد احرف اسم المستخدم عند التسجيل</b></div>
+				<div class="lengthUserG" style="display: none"> <input type="number" min="0" value="0" class=" corner dots" style="width: 80px;" autocomplete="off"><b>عدد احرف اسم دخول الزائر</b></div>			
+				<label class="btn btn-danger label fa fa-save border" style="height: 38px; width: 73px; padding: 10px 13px;" onclick="sendfile2()">حفظ</label>
+				<br>
+			</div>
+			<div class="border corner" style="padding:4px;margin-top:-1px;">
+				<label class="label label-info fa fa-gear" style=" height: 35px; width: 100px; padding: 9px; ">خيارات الموقع</label>
+				<br>
+				<label style="margin-left:5px;" class="label hid label-primary">خيارات الموقع | </label>
+				<br>
+				<label style="width: 160px; text-align: center; height: 31px; margin: 7px 0!important;" class="label label-primary fa fa-image">بنر الموقع</label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_banner,'banner');"></span>
+				<div>
+				<img class="p-banner" onclick="" style="width: 350px;" src="/site/banner.gif">
+				</div>
+				<br>
+				<label class="label label-primary fa fa-image" style=" width: 143px; text-align: center; height: 31px; margin: 7px 0!important; ">الصورة الرمزية للموقع</label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_logo,'logo');"></span>
+				<div>
+				<img class="p-logo" onclick="" style="width: 100px;height:100px" src="/site/logo.png">
+				</div>
+				<br>
+				<br>
+				<label style="width: 160px; text-align: center; height: 31px; margin: 7px 0!important;" class="label label-primary fa fa-image"> بنر خلفية المايكات</label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_pmpic,'pmpic');"></span>
+				<div>
+				<img class="p-pmpic" onclick="" style="height: 150px; width: 150px; " src="">
+				</div>
+				<br>
+			<!--	<label style="width: 160px; text-align: center; height: 31px; margin: 7px 0!important;" class="label label-primary fa fa-image"> بنر خلفية الستوري</label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_storpic,'storpic');"></span>
+				<div>
+				<img class="p-storpic" onclick="" style="height: 150px; width: 150px; " src="">
+				</div>
+				<br>-->
+				<label style="width: 160px; text-align: center; height: 31px; margin: 7px 0!important;" class="label label-primary fa fa-image"> بنر رسائل الترحيب</label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_prvpic,'prvpic');"></span>
+				<div>
+				<img class="p-prvpic" onclick="" style="height: 150px; width: 150px; " src="/site/tigerlogo.jpg">
+				</div>
+				<br>
+				<label style="width: 160px; text-align: center; height: 31px; margin: 7px 0!important;" class="label label-primary fa fa-image"> بنر الرسائل التلقائية </label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_prv2pic,'prv2pic');"></span>
+				<div>
+				<img class="p-prv2pic" onclick="" style="height: 150px; width: 150px;" src="/site/tigerlogo.jpg">
+				</div>
+				<br>
+				<label style="width: 160px; text-align: center; height: 31px; margin: 7px 0!important;" class="label label-primary fa fa-image">  مكرفون المايك </label>
+				<span class="btn btn-primary minix fa fa-plus border" style=" height: 32px; width: 50px; margin: 3px 0px -1px 0px; padding: 10px 17px; background: #53c253; border-color: #53c253!important; "onclick="sendfilea(this,s_prv3pic,'prv3pic');"></span>
+				<div>
+				<img class="p-prv3pic" onclick="" style="height: 150px; width: 150px; " src="/site/mic.png">
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<x id="lpop" style="display:none;">
+		<div style="height:100%;padding:4px;">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th style="width:40px;"></th>
+						<th class="isnametopoc"></th>
+						<th style="width:40px;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th style="background-color: white;color: #333;"><button style="margin-top: 25px;" class="usersetpower btn btn-success fa fa-save">حفظ</button></th>
+						<th style="background-color: white;color: #333;"><select style="width:150px;" class="powerbox form-control"></select><input style="width:150px;color: #333;margin-top: 10px" class="powerdays form-control" value="0" type="number" min="0" max="360" placeholder="بالأيام"></th>
+						<th style="background-color: white;color: #333;"><label style="display:inline;" class="label label-primary">الصلاحيات</label> <br><br> <label style="width: 100%;float: left;margin-top: 8px;padding: 5px 0;" class="label label-primary">المده</label> </th>
+					</tr>
+					<tr>
+						<th style="background-color: white;color: #333;"><button class="usersetlikes btn btn-success fa fa-save">حفظ</button></th>
+						<th style="background-color: white;color: #333;"><input style="width:150px;" class="userlikes form-control" value="0" type="number" min="0" max="999999" placeholder="العدد"></th>
+						<th style="background-color: white;color: #333;"><label style="width: 100%;float: left;margin-top: 8px;padding: 5px 0;" class="label label-primary">الايكات</label></th>
+					</tr>
+					<tr>
+						<th style="background-color: white;color: #333;"><button class="usersetpwd btn btn-success fa fa-save">حفظ</button></th>
+						<th style="background-color: white;color: #333;"><input style="width:150px;" class="userpwd form-control" type="text" placeholder="كلمه السر الجديدة"></th>
+						<th style="background-color: white;color: #333;"><label style="display:inline;" class="label label-primary">كلمه السر</label></th>
+					</tr>
+				</tbody>
+			</table>
+			<hr style="margin: 2px">
+			<span class="s1 fr" style="color: #d14642;width: 50%;text-align: right;display: block;margin: 5px;">
+
+				توثيق العضوية
+				<input class="documentationc" type="checkbox">
+			</span>
+			<span class="s2 fr" style="color: #d14642;width: 50%;text-align: right;display: block;margin: 5px;">
+
+				دخول مميز شبابي
+				<input class="loginG" type="checkbox">
+			</span>
+			<span class="s3 fr" style="color: #d14642;width: 50%;text-align: right;display: block;margin: 5px;">
+
+				دخول مميز بناتي
+				<input class="loginGG" type="checkbox">
+			</span>
+		<!--	<span class="f0 fr" style="color: #d14642;width: 50%;text-align: right;display: block;margin: 5px;">
+
+				دخول مميز ملكي
+				<input class="loginGG3" type="checkbox">
+			</span>-->
+			<button class="fl documentation btn btn-success " style="width: 45%;margin-top: -15px;">حفظ</button>
+
+			<hr style="width: 100%">
+			<button class="del btn btn-danger" style="width: 100%">حذف العضويه</button>
+		</div>
+	</x>
+	<script src="/cp.js"></script>
+<style>.ico_pl::before {
+    color: #fff!important;
+    background: #000!important;
+    padding: 9px;
+    margin: -10px 21px 0px -9px !important;
+    position: unset;
+}</style>
+</body>
+    
+</html>
+
+
