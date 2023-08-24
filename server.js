@@ -3,8 +3,11 @@ const dotenv = require('dotenv');
 const swaggerui = require('swagger-ui-express');
 const swaggerjsdoc = require('swagger-jsdoc');
 const express = require('express');
+const path= require('path')
 const app = express();
+const connectDB = require('./database/connect')
 const multer = require('multer')
+const bodyparser = require('body-parser')
 const useroute = require('./routes/userRoutes');
 const subroute = require('./routes/subscribeRoutes');
 const storyroute = require('./routes/storyRoutes');
@@ -52,6 +55,17 @@ app.use('/msg',msgroute)
 app.use('/log',logroute)
 app.use('/names',namesroute)
 
+
+
+connectDB()
+
+app.use(express.static(path.join(__dirname,"/public")))
+app.use(express.urlencoded({extended: true}))
+app.use(bodyparser.json())
+app.set('view engine','ejs')
+app.set('views',path.join(__dirname,"views"))
+
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -72,15 +86,6 @@ const options = {
   },
   apis: ['./routes/*.js'],
 };
-
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.log('Error connecting to MongoDB:', err.message);
-});
 
 const  storage = multer.diskStorage({
   destination: function(req,file,cb){
